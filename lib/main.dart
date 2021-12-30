@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -102,24 +103,30 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () => print('got OutlineButton press'),
       );
 
-  Column _buildRadioButtons() => Column(
-        children: Sport.values
-            .map<Widget>(
-              (sport) => ListTile(
-                leading: Radio<Sport>(
-                  value: sport,
-                  groupValue: favoriteSport,
-                  onChanged: (value) {
-                    setState(() {
-                      favoriteSport = sport;
-                    });
-                  },
-                ),
-                title: Text(sport.toString()),
-              ),
-            )
-            .toList(),
+  Column _buildRadioButtons() {
+    var names = Sport.values.map((sport) => sport.toString());
+    print(names);
+    /*
+    return Column(
+      children:
+          Sport.values.map<Widget>((sport) => Text(sport.toString())).toList(),
+    );
+    */
+    return Column(
+        children: Sport.values.map<Widget>((sport) {
+      var radio = Radio<Sport>(
+        value: sport,
+        groupValue: favoriteSport,
+        onChanged: (value) {
+          setState(() {
+            favoriteSport = sport;
+          });
+        },
       );
+
+      return ListTile(leading: radio, title: Text(describeEnum(sport)));
+    }).toList());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Form(
-          child: Column(
+          child: ListView(
             children: <Widget>[
               _buildCalendarDatePicker(),
               _buildDivider(),
