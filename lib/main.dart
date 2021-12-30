@@ -31,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 enum Sport { baseball, basketball, football, hockey }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var favoriteSport;
+  var favoriteSport = Sport.baseball;
   var like = false;
   var selectedDate = DateTime.now();
 
