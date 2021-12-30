@@ -28,7 +28,10 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+enum Sport { baseball, basketball, football, hockey }
+
 class _MyHomePageState extends State<MyHomePage> {
+  var favoriteSport;
   var like = false;
   var selectedDate = DateTime.now();
 
@@ -72,7 +75,50 @@ class _MyHomePageState extends State<MyHomePage> {
 
   ElevatedButton _buildElevatedButton() => ElevatedButton(
         child: Text('Press Me'),
-        onPressed: () => print('got press'),
+        onPressed: () => print('got ElevatedButton press'),
+      );
+
+  FloatingActionButton _buildFloatingActionButton() {
+    return FloatingActionButton(
+      child: Icon(Icons.thumb_up),
+      onPressed: () => print('got FloatingActionButon press'),
+    );
+    /*
+    return FloatingActionButton.extended(
+      label: Text("I'm Floating"),
+      icon: Icon(Icons.thumb_up),
+      onPressed: () => print('got FloatingActionButon press'),
+    );
+    */
+  }
+
+  IconButton _buildIconButton() => IconButton(
+        icon: Icon(Icons.save, color: Colors.green),
+        onPressed: () => print('got IconButton press'),
+      );
+
+  OutlinedButton _buildOutlinedButton() => OutlinedButton(
+        child: Text('OutlineButton'),
+        onPressed: () => print('got OutlineButton press'),
+      );
+
+  Column _buildRadioButtons() => Column(
+        children: Sport.values
+            .map<Widget>(
+              (sport) => ListTile(
+                leading: Radio<Sport>(
+                  value: sport,
+                  groupValue: favoriteSport,
+                  onChanged: (value) {
+                    setState(() {
+                      favoriteSport = sport;
+                    });
+                  },
+                ),
+                title: Text(sport.toString()),
+              ),
+            )
+            .toList(),
       );
 
   @override
@@ -90,6 +136,14 @@ class _MyHomePageState extends State<MyHomePage> {
               _buildCheckboxRow(),
               _buildDivider(),
               _buildElevatedButton(),
+              _buildDivider(),
+              _buildFloatingActionButton(),
+              _buildDivider(),
+              _buildIconButton(),
+              _buildDivider(),
+              _buildOutlinedButton(),
+              _buildDivider(),
+              _buildRadioButtons(),
             ],
           ),
         ),
