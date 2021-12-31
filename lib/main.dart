@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'checkboxes.dart';
+import 'iterable_extension.dart';
 import 'my_button.dart';
 import 'my_checkbox.dart';
 import 'my_dropdown.dart';
@@ -221,14 +222,10 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  List<String> getSelectedSportNames() {
-    var sportNames = <String>[];
-    for (var i = 0; i < selectedSports.length; i++) {
-      if (selectedSports[i]) {
-        sportNames.add(describeEnum(Sport.values[i]));
-      }
-    }
-    return sportNames;
+  Iterable<String> getSelectedSportNames() {
+    return Sport.values
+        .whereIndexed((sport, index) => selectedSports[index])
+        .map(describeEnum);
   }
 
   @override

@@ -1,4 +1,11 @@
 extension ExtendedIterable<E> on Iterable<E> {
+  /// Alternative to where method that provides indexes.
+  /// The where method is similar to the JavaScript Array filter method.
+  Iterable<E> whereIndexed(bool Function(E e, int i) f) {
+    var i = 0;
+    return where((e) => f(e, i++));
+  }
+
   /// Alternative to map method that provides indexes.
   Iterable<T> mapIndexed<T>(T Function(E e, int i) f) {
     var i = 0;
