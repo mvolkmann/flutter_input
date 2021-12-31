@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'iterable_extension.dart';
 import 'my_checkbox.dart';
 
 /// This creates a set of radio buttons from a list of values.
@@ -18,21 +19,19 @@ class Checkboxes<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<MyCheckbox> children = [];
-    for (var i = 0; i < values.length; i++) {
-      var label = labels[i];
-      children.add(
-        MyCheckbox(
-          label: describeEnum(label!),
-          onChanged: (bool? value) {
-            var newValues = [...values];
-            newValues[i] = value!;
-            onChanged(newValues);
-          },
-          value: values[i],
-        ),
-      );
-    }
+    var children = values
+        .mapIndexed(
+          (value, index) => MyCheckbox(
+            label: describeEnum(labels[index]!),
+            onChanged: (bool? value) {
+              var newValues = [...values];
+              newValues[index] = value!;
+              onChanged(newValues);
+            },
+            value: value,
+          ),
+        )
+        .toList();
 
     return Column(children: children);
   }
