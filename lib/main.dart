@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'my_range_slider.dart';
 import 'radio_buttons.dart';
 import 'widget_extensions.dart';
 
@@ -36,6 +37,7 @@ enum Sport { baseball, basketball, football, hockey }
 class _MyHomePageState extends State<MyHomePage> {
   var favoriteSport = Sport.baseball;
   var like = false;
+  var myRange = RangeValues(0, 100);
   var selectedDate = DateTime.now();
 
   CalendarDatePicker _buildCalendarDatePicker() => CalendarDatePicker(
@@ -166,6 +168,21 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  String doubleToIntString(double value) => value.round().toString();
+  String rangeStart(RangeValues range) => doubleToIntString(range.start);
+  String rangeEnd(RangeValues range) => doubleToIntString(range.end);
+
+  Widget _buildRangeSlider() {
+    return MyRangeSlider(
+        divisions: 20,
+        max: 100,
+        values: myRange,
+        onChanged: (RangeValues values) {
+          print(values);
+          setState(() => myRange = values);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,6 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Form(
           child: ListView(
             children: <Widget>[
+              _buildDivider(),
               _buildCalendarDatePicker(),
               _buildDivider(),
               _buildCheckboxRow(),
@@ -190,6 +208,8 @@ class _MyHomePageState extends State<MyHomePage> {
               _buildDivider(),
               _buildRadioButtons(),
               Text('Your favorite sport is ${describeEnum(favoriteSport)}.'),
+              _buildDivider(),
+              _buildRangeSlider(),
             ],
           ),
         ).pad(20),
