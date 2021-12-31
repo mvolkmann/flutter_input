@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'checkboxes.dart';
+import 'my_button.dart';
 import 'my_checkbox.dart';
 import 'my_range_slider.dart';
 import 'radio_buttons.dart';
@@ -257,24 +258,45 @@ class _MyHomePageState extends State<MyHomePage> {
               _buildDropdownButton(),
               Text('Selected season is $selectedSeason.'),
               _buildDivider(),
+
               _buildCalendarDatePicker(),
               _buildDivider(),
+
               _buildCheckboxRow(),
               _buildDivider(),
+
               _buildCheckboxes(),
               Text('Selected sports: ${getSelectedSportNames()}'),
               _buildDivider(),
+
+              // This requires manually creating
+              // a Text widget for the common case.
               _buildElevatedButton(),
+              // This creates a Text widget and
+              // an ElevatedButton that uses it.
+              Row(
+                children: [
+                  MyButton(
+                    text: 'Press Me',
+                    onPressed: () => print('got MyButton Press'),
+                  ),
+                ],
+              ),
               _buildDivider(),
+
               _buildFloatingActionButton(),
               _buildDivider(),
+
               _buildIconButton(),
               _buildDivider(),
+
               _buildOutlinedButton(),
               _buildDivider(),
+
               _buildRadioButtons(),
               Text('Favorite sport is ${describeEnum(favoriteSport)}.'),
               _buildDivider(),
+
               _buildRangeSlider(),
             ],
           ),
