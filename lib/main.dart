@@ -119,28 +119,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Divider _buildDivider() => Divider(color: Colors.red);
 
-  Widget _buildDropdownButton() => DropdownButton<String>(
-        value: selectedSeason,
-        icon: const Icon(Icons.arrow_downward),
-        elevation: 16,
-        style: const TextStyle(color: Colors.deepPurple),
-        underline: Container(
-          height: 2,
-          color: Colors.deepPurpleAccent,
-        ),
-        onChanged: (String? newValue) {
-          setState(() {
-            selectedSeason = newValue!;
-          });
-        },
-        items: <String>['', 'Spring', 'Summer', 'Fall', 'Winter']
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-      );
+  Widget _buildDropdownButton() {
+    var values = ['', 'Spring', 'Summer', 'Fall', 'Winter'];
+    var items = values
+        .map<DropdownMenuItem<String>>((value) =>
+            DropdownMenuItem<String>(value: value, child: Text(value)))
+        .toList();
+
+    return DropdownButton<String>(
+      value: selectedSeason,
+      icon: const Icon(Icons.arrow_downward),
+      elevation: 16,
+      style: const TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String? newValue) {
+        setState(() {
+          selectedSeason = newValue!;
+        });
+      },
+      items: items,
+    );
+  }
 
   ElevatedButton _buildElevatedButton() => ElevatedButton(
         child: Text('Press Me'),
