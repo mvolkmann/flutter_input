@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'checkboxes.dart';
 import 'my_button.dart';
 import 'my_checkbox.dart';
+import 'my_dropdown.dart';
 import 'my_range_slider.dart';
 import 'radio_buttons.dart';
 import 'widget_extensions.dart';
@@ -35,6 +36,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+enum Season { spring, summer, fall, winter }
 enum Sport { baseball, basketball, football, hockey }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -42,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var like = false;
   var myRange = RangeValues(0, 100);
   var selectedDate = DateTime.now();
-  var selectedSeason = '';
+  Season? selectedSeason;
 
   // This creates a list of false values, one for each Sport enum value.
   var selectedSports = Sport.values.map<bool>((_) => false).toList();
@@ -120,27 +122,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Divider _buildDivider() => Divider(color: Colors.red);
 
-  //TODO: Create a Dropdown widget that builds the items from an enum,
-  //TODO: similar to your Checkboxes and RadioButtons widgets.
-  Widget _buildDropdownButton() {
-    var values = ['', 'Spring', 'Summer', 'Fall', 'Winter'];
-    var items = values
-        .map<DropdownMenuItem<String>>((value) =>
-            DropdownMenuItem<String>(value: value, child: Text(value)))
-        .toList();
-    //TODO: How can you get this to only have the width required for the items?
-    return SizedBox(
-      child: DropdownButton<String>(
-        isExpanded: false,
-        items: items,
-        onChanged: (String? newValue) {
-          setState(() => selectedSeason = newValue!);
-        },
+  Widget _buildDropdownButton() => MyDropdown<Season>(
         value: selectedSeason,
-      ),
-      width: 100,
-    );
-  }
+        values: Season.values,
+        onChanged: (season) => setState(() => selectedSeason = season!),
+      );
 
   ElevatedButton _buildElevatedButton() => ElevatedButton(
         child: Text('Press Me'),
