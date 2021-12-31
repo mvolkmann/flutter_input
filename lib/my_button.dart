@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Simplifies creating an ElevatedButton that only contains a Text widget.
 class MyButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;

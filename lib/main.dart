@@ -253,18 +253,15 @@ class _MyHomePageState extends State<MyHomePage> {
               _buildDivider(),
 
               // This requires manually creating
-              // a Text widget for the common case.
+              // a Text widget for the common case
+              // and it's width matches its parent.
               _buildElevatedButton(),
               // This creates a Text widget and
               // an ElevatedButton that uses it.
-              Row(
-                children: [
-                  MyButton(
-                    text: 'Press Me',
-                    onPressed: () => print('got MyButton Press'),
-                  ),
-                ],
-              ),
+              MyButton(
+                text: 'Press Me',
+                onPressed: () => print('got MyButton Press'),
+              ).row(), // width will match parent without this
               _buildDivider(),
 
               _buildFloatingActionButton(),

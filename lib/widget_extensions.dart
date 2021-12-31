@@ -28,6 +28,12 @@ extension WidgetExtension on Widget {
     return Center(child: this);
   }
 
+  /// Wraps a widget in a Row which can prevent
+  /// expanding the width to match the parent width.
+  Row row() {
+    return Row(children: [this]);
+  }
+
   /// Wraps a widget in a SizedBox with a given width and height.
   SizedBox size({required double width, required double height}) {
     return SizedBox(child: this, height: height, width: width);
