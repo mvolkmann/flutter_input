@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'checkboxes.dart';
 import 'my_checkbox.dart';
 import 'my_range_slider.dart';
 import 'radio_buttons.dart';
@@ -41,6 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
   var myRange = RangeValues(0, 100);
   var selectedDate = DateTime.now();
 
+  // This creates a list of false values, one for each Sport enum value.
+  var selectedSports = Sport.values.map<bool>((_) => false).toList();
+
   CalendarDatePicker _buildCalendarDatePicker() => CalendarDatePicker(
         // Can start with display of days
         // in the initial month (.day; default) or
@@ -63,6 +67,21 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
       );
+
+  // This custom approach to creating checkboxes makes it so
+  // tapping the text to the left of the checkboxes
+  // toggles the corresponding checkbox.
+  // It also simplifies creating checkboxes
+  // from the values on an Enum.
+  Checkboxes<Sport> _buildCheckboxes() {
+    return Checkboxes(
+      labels: Sport.values,
+      values: selectedSports,
+      onChanged: (values) {
+        setState(() => selectedSports = values);
+      },
+    );
+  }
 
   /*
   // This is one way to create a labelled checkbox.
@@ -181,10 +200,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  String doubleToIntString(double value) => value.round().toString();
-  String rangeStart(RangeValues range) => doubleToIntString(range.start);
-  String rangeEnd(RangeValues range) => doubleToIntString(range.end);
-
   Widget _buildRangeSlider() {
     return MyRangeSlider(
         divisions: 20,
@@ -194,6 +209,16 @@ class _MyHomePageState extends State<MyHomePage> {
           print(values);
           setState(() => myRange = values);
         });
+  }
+
+  List<String> getSelectedSportNames() {
+    var sportNames = <String>[];
+    for (var i = 0; i < selectedSports.length; i++) {
+      if (selectedSports[i]) {
+        sportNames.add(describeEnum(Sport.values[i]));
+      }
+    }
+    return sportNames;
   }
 
   @override
@@ -206,10 +231,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Form(
           child: ListView(
             children: <Widget>[
-              _buildDivider(),
               _buildCalendarDatePicker(),
               _buildDivider(),
               _buildCheckboxRow(),
+              _buildDivider(),
+              _buildCheckboxes(),
+              Text('Selected sports: ${getSelectedSportNames()}'),
               _buildDivider(),
               _buildElevatedButton(),
               _buildDivider(),
@@ -220,7 +247,7 @@ class _MyHomePageState extends State<MyHomePage> {
               _buildOutlinedButton(),
               _buildDivider(),
               _buildRadioButtons(),
-              Text('Your favorite sport is ${describeEnum(favoriteSport)}.'),
+              Text('Favorite sport is ${describeEnum(favoriteSport)}.'),
               _buildDivider(),
               _buildRangeSlider(),
             ],
