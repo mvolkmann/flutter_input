@@ -41,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var like = false;
   var myRange = RangeValues(0, 100);
   var selectedDate = DateTime.now();
+  var selectedSeason = '';
 
   // This creates a list of false values, one for each Sport enum value.
   var selectedSports = Sport.values.map<bool>((_) => false).toList();
@@ -117,6 +118,29 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
   Divider _buildDivider() => Divider(color: Colors.red);
+
+  Widget _buildDropdownButton() => DropdownButton<String>(
+        value: selectedSeason,
+        icon: const Icon(Icons.arrow_downward),
+        elevation: 16,
+        style: const TextStyle(color: Colors.deepPurple),
+        underline: Container(
+          height: 2,
+          color: Colors.deepPurpleAccent,
+        ),
+        onChanged: (String? newValue) {
+          setState(() {
+            selectedSeason = newValue!;
+          });
+        },
+        items: <String>['', 'Spring', 'Summer', 'Fall', 'Winter']
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+      );
 
   ElevatedButton _buildElevatedButton() => ElevatedButton(
         child: Text('Press Me'),
@@ -231,6 +255,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Form(
           child: ListView(
             children: <Widget>[
+              _buildDropdownButton(),
+              Text('Selected season is $selectedSeason.'),
+              _buildDivider(),
               _buildCalendarDatePicker(),
               _buildDivider(),
               _buildCheckboxRow(),
