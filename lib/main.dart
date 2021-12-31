@@ -119,28 +119,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Divider _buildDivider() => Divider(color: Colors.red);
 
+  //TODO: Create a Dropdown widget that builds the items from an enum,
+  //TODO: similar to your Checkboxes and RadioButtons widgets.
   Widget _buildDropdownButton() {
     var values = ['', 'Spring', 'Summer', 'Fall', 'Winter'];
     var items = values
         .map<DropdownMenuItem<String>>((value) =>
             DropdownMenuItem<String>(value: value, child: Text(value)))
         .toList();
-
-    return DropdownButton<String>(
-      value: selectedSeason,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
+    //TODO: How can you get this to only have the width required for the items?
+    return SizedBox(
+      child: DropdownButton<String>(
+        isExpanded: false,
+        items: items,
+        onChanged: (String? newValue) {
+          setState(() => selectedSeason = newValue!);
+        },
+        value: selectedSeason,
       ),
-      onChanged: (String? newValue) {
-        setState(() {
-          selectedSeason = newValue!;
-        });
-      },
-      items: items,
+      width: 100,
     );
   }
 
