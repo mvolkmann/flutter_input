@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'my_checkbox.dart';
 import 'my_range_slider.dart';
 import 'radio_buttons.dart';
 import 'widget_extensions.dart';
@@ -63,6 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       );
 
+  /*
+  // This is one way to create a labelled checkbox.
+  // I don't prefer this approach because tapping the text
+  // to the left of the checkbox does not toggle it.
   Row _buildCheckboxRow() => Row(children: [
         Text('Like?'),
         Checkbox(
@@ -71,6 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
           onChanged: (value) => setState(() => like = value!),
         ),
       ]);
+  */
+
   /*
   // Here is another way to implement _buildCheckboxRow
   // that uses CheckboxListTile.  I don't prefer that
@@ -83,6 +90,12 @@ class _MyHomePageState extends State<MyHomePage> {
         onChanged: (value) => setState(() => like = value!),
       );
   */
+
+  Widget _buildCheckboxRow() => MyCheckbox(
+        label: 'Like?',
+        value: like,
+        onChanged: (value) => setState(() => like = value!),
+      );
 
   Divider _buildDivider() => Divider(color: Colors.red);
 
