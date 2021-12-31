@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'radio_buttons.dart';
+import 'widget_extensions.dart';
 
 void main() {
   runApp(const MyApp());
@@ -63,14 +65,22 @@ class _MyHomePageState extends State<MyHomePage> {
         Text('Like?'),
         Checkbox(
           value: like,
-          onChanged: (value) {
-            //TODO: Why is the type of value "bool?"?
-            setState(() {
-              like = value!;
-            });
-          },
+          //TODO: Why is the type of value "bool?"?
+          onChanged: (value) => setState(() => like = value!),
         ),
       ]);
+  /*
+  // Here is another way to implement _buildCheckboxRow
+  // that uses CheckboxListTile.  I don't prefer that
+  // because it takes all available width and
+  // puts the title on the left and the checkbox on the right.
+  CheckboxListTile _buildCheckboxRow() => CheckboxListTile(
+        contentPadding: EdgeInsets.zero,
+        title: Text('Like?'),
+        value: like,
+        onChanged: (value) => setState(() => like = value!),
+      );
+  */
 
   Divider _buildDivider() => Divider(color: Colors.red);
 
@@ -84,6 +94,9 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Icon(Icons.thumb_up),
       onPressed: () => print('got FloatingActionButon press'),
     );
+
+    // This creates a button that is an oval instead of a circle
+    // and contains an Icon AND a label.
     /*
     return FloatingActionButton.extended(
       label: Text("I'm Floating"),
@@ -103,29 +116,54 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () => print('got OutlineButton press'),
       );
 
+  /*
+  // This is one way to create a set of radio buttons.
+  // I don't prefer this approach because tapping the text
+  // to the right of the radio buttons does not select them.
   Column _buildRadioButtons() {
-    var names = Sport.values.map((sport) => sport.toString());
-    print(names);
-    /*
     return Column(
-      children:
-          Sport.values.map<Widget>((sport) => Text(sport.toString())).toList(),
-    );
-    */
-    return Column(
-        children: Sport.values.map<Widget>((sport) {
-      var radio = Radio<Sport>(
-        value: sport,
-        groupValue: favoriteSport,
-        onChanged: (value) {
-          setState(() {
-            favoriteSport = sport;
-          });
-        },
-      );
+        children: Sport.values.map<Widget>(
+      (sport) {
+        var radio = Radio<Sport>(
+          value: sport,
+          groupValue: favoriteSport,
+          visualDensity: VisualDensity.compact,
+          onChanged: (value) {
+            setState(() {
+              favoriteSport = sport;
+            });
+          },
+        );
+        return ListTile(
+          contentPadding: EdgeInsets.all(0),
+          // This reduces the space between rows
+          // and makes leading and title smaller.
+          dense: true,
+          horizontalTitleGap: 0, // reduces space between leading and title
+          leading: radio,
+          //minLeadingWidth: 0, // no effect
+          //minVerticalPadding: 0, // no effect
+          // Tapping the title does not select the corresponding Radio.
+          title: Text(describeEnum(sport)),
+        );
+      },
+    ).toList());
+  }
+  */
 
-      return ListTile(leading: radio, title: Text(describeEnum(sport)));
-    }).toList());
+  // This custom approach to creating radio buttons makes it so
+  // tapping the text to the right of the radio buttons
+  // selects the corresponding radio button.
+  // It also simplifies creating radio buttons
+  // from the values on an Enum.
+  Widget _buildRadioButtons() {
+    return RadioButtons(
+      groupValue: favoriteSport,
+      values: Sport.values,
+      onChanged: (value) {
+        setState(() => favoriteSport = value as Sport);
+      },
+    );
   }
 
   @override
@@ -151,9 +189,10 @@ class _MyHomePageState extends State<MyHomePage> {
               _buildOutlinedButton(),
               _buildDivider(),
               _buildRadioButtons(),
+              Text('Your favorite sport is ${describeEnum(favoriteSport)}.'),
             ],
           ),
-        ),
+        ).pad(20),
       ),
     );
   }
