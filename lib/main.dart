@@ -368,6 +368,8 @@ class _MyHomePageState extends State<MyHomePage> {
           child: ListView(
             children: <Widget>[
               _buildAutocomplete(),
+              if (selectedWord.isNotEmpty)
+                Text('selected word is $selectedWord'),
               _buildDivider(),
 
               _buildPopupMenuButton(),
