@@ -52,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var selectedDate = DateTime.now();
   Season? selectedSeason;
   var sliderValue = 0.0;
+  var yearDate = DateTime.now();
 
   // This creates a list of false values, one for each Sport enum value.
   var selectedSports = Sport.values.map<bool>((_) => false).toList();
@@ -261,6 +262,32 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Widget _buildYearPicker() {
+    //TODO: This isn't working properly and I can find an example online.
+    return SizedBox(
+      height: 100,
+      width: 200,
+      child: YearPicker(
+        // Earliest date from which a year can be selected.
+        firstDate: DateTime.utc(1940, 1, 1),
+
+        // Latest date from which a year can be selected.
+        lastDate: DateTime.utc(2099, 12, 31),
+
+        initialDate: DateTime.now(),
+
+        selectedDate: yearDate,
+
+        onChanged: (dateTime) {
+          print('selected $dateTime');
+          setState(() {
+            yearDate = dateTime;
+          });
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -271,8 +298,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Form(
           child: ListView(
             children: <Widget>[
-              _buildTextField(),
-              if (firstName.isNotEmpty) Text('Hello, $firstName!'),
+              _buildYearPicker(),
               _buildDivider(),
 
               _buildCalendarDatePicker(),
@@ -321,6 +347,13 @@ class _MyHomePageState extends State<MyHomePage> {
               _buildDivider(),
 
               _buildSwitch(),
+              _buildDivider(),
+
+              _buildTextField(),
+              if (firstName.isNotEmpty) Text('Hello, $firstName!'),
+
+              _buildDivider(),
+              //_buildYearPicker(),
             ],
           ),
         ).pad(20),
