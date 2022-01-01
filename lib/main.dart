@@ -189,11 +189,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
   */
-  Widget _buildPopupMenuButton() => MyPopupMenuButton(
-        //onSelected: (Sport? value) => setState(() => selectedSport = value!),
+  Widget _buildPopupMenuButton() => MyPopupMenuButton<Sport?>(
+        //onSelected: (Sport? value) => setState(() => selectedSport = value),
         onSelected: (Sport? value) {
           print('value = $value');
-          setState(() => selectedSport = value!);
+          setState(() => selectedSport = value);
         },
         value: selectedSport,
         values: Sport.values,
