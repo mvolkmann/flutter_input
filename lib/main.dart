@@ -6,6 +6,7 @@ import 'my_button.dart';
 import 'my_checkbox.dart';
 import 'my_dropdown.dart';
 import 'my_range_slider.dart';
+import 'my_slider.dart';
 import 'radio_buttons.dart';
 import 'widget_extensions.dart';
 
@@ -46,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var myRange = RangeValues(0, 100);
   var selectedDate = DateTime.now();
   Season? selectedSeason;
+  var sliderValue = 0.0;
 
   // This creates a list of false values, one for each Sport enum value.
   var selectedSports = Sport.values.map<bool>((_) => false).toList();
@@ -217,7 +219,6 @@ class _MyHomePageState extends State<MyHomePage> {
         max: 100,
         values: myRange,
         onChanged: (RangeValues values) {
-          print(values);
           setState(() => myRange = values);
         });
   }
@@ -226,6 +227,16 @@ class _MyHomePageState extends State<MyHomePage> {
     return Sport.values
         .whereIndexed((sport, index) => selectedSports[index])
         .map(describeEnum);
+  }
+
+  Widget _buildSlider() {
+    return MySlider(
+        divisions: 20,
+        max: 100,
+        value: sliderValue,
+        onChanged: (double value) {
+          setState(() => sliderValue = value);
+        });
   }
 
   @override
@@ -238,8 +249,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Form(
           child: ListView(
             children: <Widget>[
-              _buildDropdownButton(),
-              Text('Selected season is $selectedSeason.'),
+              _buildSlider(),
               _buildDivider(),
 
               _buildCalendarDatePicker(),
@@ -250,6 +260,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
               _buildCheckboxes(),
               Text('Selected sports: ${getSelectedSportNames()}'),
+              _buildDivider(),
+
+              _buildDropdownButton(),
+              Text('Selected season is $selectedSeason.'),
               _buildDivider(),
 
               // This requires manually creating
