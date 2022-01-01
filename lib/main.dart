@@ -316,13 +316,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Form(
           child: ListView(
             children: <Widget>[
-              _buildToggleButtons(),
-              Text('Selected alignment: $alignment'),
-              _buildDivider(),
-
-              _buildYearPicker(),
-              _buildDivider(),
-
               _buildCalendarDatePicker(),
               _buildDivider(),
 
@@ -373,8 +366,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
               _buildTextField(),
               if (firstName.isNotEmpty) Text('Hello, $firstName!'),
-
               _buildDivider(),
+
+              _buildToggleButtons(),
+              Text('Selected alignment: $alignment'),
+
+              //_buildDivider(),
               //_buildYearPicker(),
             ],
           ),

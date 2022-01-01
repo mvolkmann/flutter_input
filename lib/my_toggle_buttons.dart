@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'iterable_extension.dart';
+import 'widget_extensions.dart';
 
 class MyToggleButtons<T> extends StatelessWidget {
   final T? value;
@@ -31,15 +32,18 @@ class MyToggleButtons<T> extends StatelessWidget {
               if (icons != null) Icon(icons![index]),
               if (labels != null) Text(labels![index]),
             ],
-          ),
+          ).pad(10),
         )
         .toList();
 
     return ToggleButtons(
-        children: children,
-        isSelected: isSelected,
-        onPressed: (int index) {
-          onChanged(values[index]);
-        });
+      borderRadius: BorderRadius.circular(10),
+      borderWidth: 2,
+      children: children,
+      isSelected: isSelected,
+      onPressed: (int index) {
+        onChanged(values[index]);
+      },
+    );
   }
 }
