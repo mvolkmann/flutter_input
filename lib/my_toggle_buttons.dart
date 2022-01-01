@@ -16,7 +16,8 @@ class MyToggleButtons<T> extends StatelessWidget {
     required this.onChanged,
     required this.value,
     required this.values,
-  }) : super(key: key);
+  })  : assert(icons != null || labels != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
