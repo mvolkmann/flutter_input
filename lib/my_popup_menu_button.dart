@@ -15,7 +15,6 @@ class MyPopupMenuButton<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('build: value = $value');
     var items = values
         .map<PopupMenuItem<T?>>(
           (T value) => PopupMenuItem<T>(

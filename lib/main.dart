@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'checkboxes.dart';
 import 'iterable_extension.dart';
+import 'my_autocomplete.dart';
 import 'my_button.dart';
 import 'my_checkbox.dart';
 import 'my_dropdown.dart';
@@ -56,11 +57,34 @@ class _MyHomePageState extends State<MyHomePage> {
   Sport? selectedSport;
   var selectedDate = DateTime.now();
   Season? selectedSeason;
+  String selectedWord = '';
   var sliderValue = 0.0;
   var yearDate = DateTime.now();
 
+  static const words = [
+    'apple',
+    'apricot',
+    'banana',
+    'blueberry',
+    'blackberry',
+    'cherry',
+    'grape',
+    'grapefruit',
+    'lemon',
+    'orange',
+    'peach',
+    'plum',
+    'watermelon'
+  ];
+
   // This creates a list of false values, one for each Sport enum value.
   var selectedSports = Sport.values.map<bool>((_) => false).toList();
+
+  Widget _buildAutocomplete() => MyAutocomplete(
+        initialValue: selectedWord,
+        onSelected: (value) => setState(() => selectedWord = value),
+        words: words,
+      );
 
   CalendarDatePicker _buildCalendarDatePicker() => CalendarDatePicker(
         // Can start with display of days
@@ -343,8 +367,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Form(
           child: ListView(
             children: <Widget>[
+              _buildAutocomplete(),
+              _buildDivider(),
+
               _buildPopupMenuButton(),
               _buildDivider(),
+
               BackButton(
                 //color: Colors.green,
                 onPressed: () => print('got BackButton press'),
@@ -354,6 +382,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () => print('got CloseButton press'),
               ),
               _buildDivider(),
+
               _buildCalendarDatePicker(),
               _buildDivider(),
 
