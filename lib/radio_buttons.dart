@@ -6,8 +6,8 @@ import 'my_radio.dart';
 /// The values can come from the values property of an enum.
 class RadioButtons<T> extends StatelessWidget {
   final T? groupValue;
-  final List<T> values;
   final ValueChanged<Object?> onChanged;
+  final List<T> values;
 
   const RadioButtons({
     Key? key,

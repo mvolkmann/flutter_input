@@ -6,9 +6,9 @@ import 'my_checkbox.dart';
 /// This creates a set of radio buttons from a list of values.
 /// The values can come from the values property of an enum.
 class Checkboxes<T> extends StatelessWidget {
-  final List<bool> values;
   final List<T> labels;
   final ValueChanged<List<bool>> onChanged;
+  final List<bool> values;
 
   const Checkboxes({
     Key? key,

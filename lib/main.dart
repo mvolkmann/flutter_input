@@ -5,6 +5,7 @@ import 'iterable_extension.dart';
 import 'my_button.dart';
 import 'my_checkbox.dart';
 import 'my_dropdown.dart';
+import 'my_popup_menu_button.dart';
 import 'my_range_slider.dart';
 import 'my_slider.dart';
 import 'my_text_field.dart';
@@ -52,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var like = false;
   var lightSwitch = false;
   var myRange = RangeValues(0, 100);
+  Sport? selectedSport;
   var selectedDate = DateTime.now();
   Season? selectedSeason;
   var sliderValue = 0.0;
@@ -170,6 +172,31 @@ class _MyHomePageState extends State<MyHomePage> {
   OutlinedButton _buildOutlinedButton() => OutlinedButton(
         child: Text('OutlineButton'),
         onPressed: () => print('got OutlineButton press'),
+      );
+
+  /*
+  Widget _buildPopupMenuButton() => PopupMenuButton(
+        itemBuilder: (BuildContext context) => Sport.values
+            .map<PopupMenuItem<Sport>>(
+              (Sport sport) => PopupMenuItem<Sport>(
+                child: Text(describeEnum(sport)),
+                value: sport,
+              ),
+            )
+            .toList(),
+        onSelected: (Sport? value) => setState(
+          () => selectedSport = value!,
+        ),
+      );
+  */
+  Widget _buildPopupMenuButton() => MyPopupMenuButton(
+        //onSelected: (Sport? value) => setState(() => selectedSport = value!),
+        onSelected: (Sport? value) {
+          print('value = $value');
+          setState(() => selectedSport = value!);
+        },
+        value: selectedSport,
+        values: Sport.values,
       );
 
   /*
@@ -316,6 +343,17 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Form(
           child: ListView(
             children: <Widget>[
+              _buildPopupMenuButton(),
+              _buildDivider(),
+              BackButton(
+                //color: Colors.green,
+                onPressed: () => print('got BackButton press'),
+              ),
+              CloseButton(
+                color: Colors.red,
+                onPressed: () => print('got CloseButton press'),
+              ),
+              _buildDivider(),
               _buildCalendarDatePicker(),
               _buildDivider(),
 
