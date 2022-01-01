@@ -9,6 +9,7 @@ import 'my_range_slider.dart';
 import 'my_slider.dart';
 import 'my_text_field.dart';
 import 'my_switch.dart';
+import 'my_toggle_buttons.dart';
 import 'radio_buttons.dart';
 import 'widget_extensions.dart';
 
@@ -44,8 +45,10 @@ enum Season { spring, summer, fall, winter }
 enum Sport { baseball, basketball, football, hockey }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var alignment = 'left';
   var favoriteSport = Sport.baseball;
   var firstName = '';
+  var isSelected = [false, false, false];
   var like = false;
   var lightSwitch = false;
   var myRange = RangeValues(0, 100);
@@ -142,6 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
   FloatingActionButton _buildFloatingActionButton() {
+    //TODO: How do you position this in the lower-right corner?
     return FloatingActionButton(
       child: Icon(Icons.thumb_up),
       onPressed: () => print('got FloatingActionButon press'),
@@ -228,12 +232,6 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  Iterable<String> getSelectedSportNames() {
-    return Sport.values
-        .whereIndexed((sport, index) => selectedSports[index])
-        .map(describeEnum);
-  }
-
   Widget _buildSlider() {
     return MySlider(
         divisions: 20,
@@ -259,6 +257,20 @@ class _MyHomePageState extends State<MyHomePage> {
       initialValue: firstName,
       labelText: 'First Name',
       onChanged: (value) => setState(() => firstName = value),
+    );
+  }
+
+  Widget _buildToggleButtons() {
+    return MyToggleButtons(
+      icons: [
+        Icons.align_horizontal_left,
+        Icons.align_horizontal_center,
+        Icons.align_horizontal_right,
+      ],
+      labels: ['Left', 'Center', 'Right'],
+      value: alignment,
+      values: ['left', 'center', 'right'],
+      onChanged: (value) => setState(() => alignment = value),
     );
   }
 
@@ -288,6 +300,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Iterable<String> getSelectedSportNames() {
+    return Sport.values
+        .whereIndexed((sport, index) => selectedSports[index])
+        .map(describeEnum);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -298,6 +316,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Form(
           child: ListView(
             children: <Widget>[
+              _buildToggleButtons(),
+              Text('Selected alignment: $alignment'),
+              _buildDivider(),
+
               _buildYearPicker(),
               _buildDivider(),
 
