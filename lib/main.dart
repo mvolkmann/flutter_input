@@ -7,6 +7,7 @@ import 'my_checkbox.dart';
 import 'my_dropdown.dart';
 import 'my_range_slider.dart';
 import 'my_slider.dart';
+import 'my_text_field.dart';
 import 'my_switch.dart';
 import 'radio_buttons.dart';
 import 'widget_extensions.dart';
@@ -44,6 +45,7 @@ enum Sport { baseball, basketball, football, hockey }
 
 class _MyHomePageState extends State<MyHomePage> {
   var favoriteSport = Sport.baseball;
+  var firstName = '';
   var like = false;
   var lightSwitch = false;
   var myRange = RangeValues(0, 100);
@@ -250,6 +252,15 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Widget _buildTextField() {
+    return MyTextField(
+      hintText: 'Enter your first name.',
+      initialValue: firstName,
+      labelText: 'First Name',
+      onChanged: (value) => setState(() => firstName = value),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -260,10 +271,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Form(
           child: ListView(
             children: <Widget>[
-              _buildSwitch(),
-              _buildDivider(),
-
-              _buildSlider(),
+              _buildTextField(),
+              if (firstName.isNotEmpty) Text('Hello, $firstName!'),
               _buildDivider(),
 
               _buildCalendarDatePicker(),
@@ -306,6 +315,12 @@ class _MyHomePageState extends State<MyHomePage> {
               _buildDivider(),
 
               _buildRangeSlider(),
+              _buildDivider(),
+
+              _buildSlider(),
+              _buildDivider(),
+
+              _buildSwitch(),
             ],
           ),
         ).pad(20),
