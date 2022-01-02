@@ -31,9 +31,7 @@ extension WidgetExtension on Widget {
 
   /// Wraps a widget in a Row which can prevent
   /// expanding the width to match the parent width.
-  Row row() {
-    return Row(children: [this]);
-  }
+  Row get row => Row(children: [this]);
 
   /// Wraps a widget in a SizedBox with a given width and height.
   SizedBox size({required double width, required double height}) {
