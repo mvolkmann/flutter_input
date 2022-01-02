@@ -44,7 +44,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 enum Season { spring, summer, fall, winter }
-enum Sport { baseball, basketball, football, hockey }
+enum Sport { none, baseball, basketball, football, hockey }
 
 class _MyHomePageState extends State<MyHomePage> {
   var alignment = 'left';
@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var like = false;
   var lightSwitch = false;
   var myRange = RangeValues(0, 100);
-  Sport? selectedSport;
+  var selectedSport = Sport.none;
   var selectedDate = DateTime.now();
   Season? selectedSeason;
   String selectedWord = '';
@@ -213,12 +213,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
   */
-  Widget _buildPopupMenuButton() => MyPopupMenuButton<Sport?>(
-        //onSelected: (Sport? value) => setState(() => selectedSport = value),
-        onSelected: (Sport? value) {
-          print('value = $value');
-          setState(() => selectedSport = value);
-        },
+  Widget _buildPopupMenuButton() => MyPopupMenuButton<Sport>(
+        onSelected: (Sport value) => setState(() => selectedSport = value),
         value: selectedSport,
         values: Sport.values,
       );

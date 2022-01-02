@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class MyPopupMenuButton<T> extends StatelessWidget {
-  final ValueChanged<T?> onSelected;
-  final T? value;
+class MyPopupMenuButton<T extends Object> extends StatelessWidget {
+  final ValueChanged<T> onSelected;
+  final T value;
+  // PopupMenuButton does not support
+  // having a PopupMenuItem whose value is null!
   final List<T> values;
 
   const MyPopupMenuButton({
@@ -16,21 +18,18 @@ class MyPopupMenuButton<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var items = values
-        .map<PopupMenuItem<T?>>(
+        .map<PopupMenuItem<T>>(
           (T value) => PopupMenuItem<T>(
-            child: Text(describeEnum(value!)),
+            child: Text(describeEnum(value)),
             value: value,
           ),
         )
         .toList();
-    //TODO: Why is onSelected not called when this is selected?
-    items.insert(0, PopupMenuItem(child: Text('None'), value: null));
     return Row(
       children: [
-        //if (value != null) Text(describeEnum(value!)),
-        Text(value == null ? 'None' : describeEnum(value!)),
-        PopupMenuButton<T?>(
-          icon: Icon(Icons.more_vert), // horizontal ellipsis by default
+        Text(describeEnum(value)),
+        PopupMenuButton<T>(
+          icon: Icon(Icons.more_vert), // uses horizontal ellipsis by default
           itemBuilder: (BuildContext context) => items,
           onSelected: onSelected,
         ),
