@@ -24,9 +24,7 @@ extension WidgetExtension on Widget {
   }
 
   /// Wraps a widget in a Center.
-  Center center() {
-    return Center(child: this);
-  }
+  Center get center => Center(child: this);
 
   /// Wraps a widget in a Center.
   Expanded expand() {
