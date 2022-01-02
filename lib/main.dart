@@ -8,6 +8,7 @@ import 'my_checkbox.dart';
 import 'my_dropdown.dart';
 import 'my_popup_menu_button.dart';
 import 'my_range_slider.dart';
+import 'my_reorderable_list.dart';
 import 'my_slider.dart';
 import 'my_text_field.dart';
 import 'my_switch.dart';
@@ -278,6 +279,11 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  Widget _buildReorderableList() {
+    var items = ['apple', 'banana', 'cherry', 'grape'];
+    return MyReorderableList(items: items);
+  }
+
   Widget _buildSlider() {
     return MySlider(
         divisions: 20,
@@ -362,12 +368,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Form(
           child: ListView(
             children: <Widget>[
+              _buildReorderableList(),
+              _buildDivider(),
+
               _buildAutocomplete(),
               if (selectedWord.isNotEmpty)
                 Text('selected word is $selectedWord'),
-              _buildDivider(),
-
-              _buildPopupMenuButton(),
               _buildDivider(),
 
               BackButton(
@@ -413,6 +419,9 @@ class _MyHomePageState extends State<MyHomePage> {
               _buildDivider(),
 
               _buildOutlinedButton(),
+              _buildDivider(),
+
+              _buildPopupMenuButton(),
               _buildDivider(),
 
               _buildRadioButtons(),
