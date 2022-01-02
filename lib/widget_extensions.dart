@@ -27,9 +27,7 @@ extension WidgetExtension on Widget {
   Center get center => Center(child: this);
 
   /// Wraps a widget in a Center.
-  Expanded expand() {
-    return Expanded(child: this);
-  }
+  Expanded get expand => Expanded(child: this);
 
   /// Wraps a widget in a Row which can prevent
   /// expanding the width to match the parent width.
@@ -71,7 +69,7 @@ extension WidgetListExtension<Widget> on List<Widget> {
 
   /*
   Row row() {
-    //TODO: Why does the next line give the follwoing error?
+    //TODO: Why does the next line give the following error?
     //TODO: The argument type 'List<Widget>' can't be
     //TODO: assigned to the parameter type 'List<Widget>'
     return Row(children: this);
