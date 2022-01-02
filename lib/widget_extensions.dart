@@ -28,6 +28,11 @@ extension WidgetExtension on Widget {
     return Center(child: this);
   }
 
+  /// Wraps a widget in a Center.
+  Expanded expand() {
+    return Expanded(child: this);
+  }
+
   /// Wraps a widget in a Row which can prevent
   /// expanding the width to match the parent width.
   Row row() {

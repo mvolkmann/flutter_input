@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'widget_extensions.dart';
 
 class MyReorderableList extends StatelessWidget {
   final List<String> items;
@@ -16,15 +17,20 @@ class MyReorderableList extends StatelessWidget {
       child: ReorderableList(
         itemBuilder: (context, index) {
           return ReorderableDragStartListener(
-            child: Text(items[index]),
+            child: Row(
+              children: [
+                Text(items[index]).expand(),
+                Icon(Icons.menu, color: Colors.grey),
+              ],
+            ),
             index: index,
             key: Key(items[index]),
           );
         },
         itemCount: items.length,
         onReorder: (oldIndex, newIndex) {
-          //TODO: This logic is not correct!
           final item = items.removeAt(oldIndex);
+          if (newIndex > oldIndex) newIndex--;
           items.insert(newIndex, item);
         },
       ),
