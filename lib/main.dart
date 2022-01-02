@@ -48,13 +48,12 @@ enum Sport { none, baseball, basketball, football, hockey }
 
 class _MyHomePageState extends State<MyHomePage> {
   var alignment = 'left';
-  var favoriteSport = Sport.baseball;
+  var favoriteSport = Sport.none;
   var firstName = '';
   var isSelected = [false, false, false];
   var like = false;
   var lightSwitch = false;
   var myRange = RangeValues(0, 100);
-  var selectedSport = Sport.none;
   var selectedDate = DateTime.now();
   Season? selectedSeason;
   String selectedWord = '';
@@ -214,8 +213,8 @@ class _MyHomePageState extends State<MyHomePage> {
       );
   */
   Widget _buildPopupMenuButton() => MyPopupMenuButton<Sport>(
-        onSelected: (Sport value) => setState(() => selectedSport = value),
-        value: selectedSport,
+        onSelected: (Sport value) => setState(() => favoriteSport = value),
+        value: favoriteSport,
         values: Sport.values,
       );
 
