@@ -71,6 +71,15 @@ extension WidgetListExtension<Widget> on List<Widget> {
     return this;
   }
 
+  /*
+  Row row() {
+    //TODO: Why does the next line give the follwoing error?
+    //TODO: The argument type 'List<Widget>' can't be
+    //TODO: assigned to the parameter type 'List<Widget>'
+    return Row(children: this);
+  }
+  */
+
   /// Adds a SizedBox with the same width and height
   /// between all Widgets in the List.
   List<Widget> spacing(double size) {

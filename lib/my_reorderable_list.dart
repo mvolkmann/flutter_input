@@ -11,7 +11,6 @@ class MyReorderableList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Is SizedBox needed?
     return SizedBox(
       height: 100,
       child: ReorderableList(
