@@ -364,6 +364,10 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.ac_unit),
+        onPressed: () => print('got press'),
+      ),
       body: Center(
         child: Form(
           child: ListView(
@@ -409,7 +413,7 @@ class _MyHomePageState extends State<MyHomePage> {
               MyButton(
                 text: 'Press Me',
                 onPressed: () => print('got MyButton Press'),
-              ).row(), // width will match parent without this
+              ).row, // width will match parent without this
               _buildDivider(),
 
               _buildFloatingActionButton(),

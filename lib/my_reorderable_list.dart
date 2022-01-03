@@ -18,7 +18,7 @@ class MyReorderableList extends StatelessWidget {
           return ReorderableDragStartListener(
             child: Row(
               children: [
-                Text(items[index]).expand(),
+                Text(items[index]).expand,
                 Icon(Icons.menu, color: Colors.grey),
               ],
             ),
