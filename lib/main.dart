@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'checkboxes.dart';
 import 'iterable_extension.dart';
 import 'my_autocomplete.dart';
@@ -171,7 +172,8 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
   FloatingActionButton _buildFloatingActionButton() {
-    //TODO: How do you position this in the lower-right corner?
+    // When this is used as the floatingActionButton argument to a Scaffold,
+    // it is placed in the lower-right corner.
     return FloatingActionButton(
       child: Icon(Icons.thumb_up),
       onPressed: () => print('got FloatingActionButon press'),
