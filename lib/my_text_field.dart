@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'widget_extensions.dart';
 
+typedef ValidatorFn = String? Function(String?)?;
+
 class MyTextField extends StatefulWidget {
   final String hintText;
   final String initialValue;
   final String labelText;
-  final Function(String) onChanged;
+  final bool obscureText;
+  final void Function(String) onChanged;
+  final ValidatorFn validator;
 
   const MyTextField({
     Key? key,
     this.hintText = '',
     this.initialValue = '',
     this.labelText = '',
+    this.obscureText = false,
+    this.validator,
     required this.onChanged,
   }) : super(key: key);
 
@@ -22,6 +28,7 @@ class MyTextField extends StatefulWidget {
 class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
+    var validator = widget.validator;
     return TextFormField(
       decoration: InputDecoration(
         border: OutlineInputBorder(),
@@ -31,10 +38,9 @@ class _MyTextFieldState extends State<MyTextField> {
         labelText: widget.labelText,
       ),
       initialValue: widget.initialValue,
-      onChanged: (String value) {
-        print('value = $value');
-        widget.onChanged(value);
-      },
+      obscureText: widget.obscureText,
+      onChanged: (String value) => widget.onChanged(value),
+      validator: validator,
     ).pad(10);
   }
 }
