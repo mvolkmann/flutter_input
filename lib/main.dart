@@ -2,11 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'checkboxes.dart';
+import 'dismiss_keyboard.dart';
 import 'iterable_extension.dart';
 import 'my_autocomplete.dart';
 import 'my_button.dart';
 import 'my_checkbox.dart';
 import 'my_dropdown.dart';
+import 'my_password_field.dart';
 import 'my_popup_menu_button.dart';
 import 'my_range_slider.dart';
 import 'my_reorderable_list.dart';
@@ -26,12 +28,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return DismissKeyboard(
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -56,6 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
   var like = false;
   var lightSwitch = false;
   var myRange = RangeValues(0, 100);
+  var password = '';
+  //var scrollController = ScrollController();
   var selectedDate = DateTime.now();
   Season? selectedSeason;
   String selectedWord = '';
@@ -199,6 +205,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Text('OutlineButton'),
         onPressed: () => print('got OutlineButton press'),
       );
+
+  Widget _buildPasswordField() {
+    return MyPasswordField(
+      labelText: 'Password',
+      onChanged: (value) => setState(() => password = value),
+    );
+  }
 
   /*
   Widget _buildPopupMenuButton() => PopupMenuButton(
@@ -360,6 +373,24 @@ class _MyHomePageState extends State<MyHomePage> {
         .map(describeEnum);
   }
 
+  /*
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      // Removes focus from the TextField that
+      // triggered the on-screen keyboard to open.
+      FocusScope.of(context).requestFocus(FocusNode());
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+  */
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -373,7 +404,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Form(
           child: ListView(
+            //controller: scrollController,
             children: <Widget>[
+              _buildPasswordField(),
+              _buildDivider(),
+
               _buildReorderableList(),
               _buildDivider(),
 
