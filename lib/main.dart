@@ -34,28 +34,29 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        home: const Home(title: 'Flutter Demo Home Page'),
       ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
+class Home extends StatefulWidget {
   final String title;
 
+  const Home({Key? key, required this.title}) : super(key: key);
+
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<Home> createState() => _HomeState();
 }
 
 enum Season { spring, summer, fall, winter }
 enum Sport { none, baseball, basketball, football, hockey }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomeState extends State<Home> {
   var alignment = 'left';
   var favoriteSport = Sport.none;
   var firstName = '';
+  var isExpanded = false;
   var isSelected = [false, false, false];
   var like = false;
   var lightSwitch = false;
@@ -406,6 +407,19 @@ class _MyHomePageState extends State<MyHomePage> {
           child: ListView(
             //controller: scrollController,
             children: <Widget>[
+              ExpandIcon(
+                  isExpanded: isExpanded,
+                  onPressed: (_) {
+                    setState(() => isExpanded = !isExpanded);
+                  }),
+              AnimatedContainer(
+                child: Text('I am showing!'),
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
+                height: isExpanded ? 20 : 0,
+              ),
+              _buildDivider(),
+
               _buildPasswordField(),
               _buildDivider(),
 
