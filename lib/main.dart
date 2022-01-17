@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -165,6 +166,49 @@ class _HomeState extends State<Home> {
         onChanged: (value) => setState(() => like = value!),
       );
 
+  Widget _buildCupertinoDatePicker() {
+    return Container(
+      child: CupertinoDatePicker(
+        initialDateTime: DateTime.now(),
+        minimumYear: 1990,
+        maximumYear: 2030,
+
+        // Will get "Failed assert" after changing this.
+        // Restart the app to resolve.
+        //mode: CupertinoDatePickerMode.dateAndTime, // default
+        mode: CupertinoDatePickerMode.date,
+        //mode: CupertinoDatePickerMode.time,
+
+        onDateTimeChanged: (DateTime value) {
+          print('You selected $value');
+        },
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.red),
+      ),
+      height: 200,
+    );
+  }
+
+  Widget _buildCupertinoPicker() {
+    return Container(
+      child: CupertinoPicker.builder(
+        childCount: words.length,
+        itemBuilder: (context, index) => Text(words[index]),
+        itemExtent: 30, // height of each item
+        onSelectedItemChanged: (int index) {
+          // This fires while dragging, not just when released.
+          print('You selected ${words[index]}');
+        },
+      ),
+      // This makes it clear the vertical space that is occupied.
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.red),
+      ),
+      height: 150, // height of wheel; affects # of visible items
+    );
+  }
+
   Divider _buildDivider() => Divider(color: Colors.red);
 
   Widget _buildDropdownButton() => MyDropdown<Season>(
@@ -173,9 +217,13 @@ class _HomeState extends State<Home> {
         onChanged: (season) => setState(() => selectedSeason = season!),
       );
 
-  ElevatedButton _buildElevatedButton() => ElevatedButton(
-        child: Text('Press Me'),
-        onPressed: () => print('got ElevatedButton press'),
+  Widget _buildElevatedButton() => Tooltip(
+        child: ElevatedButton(
+          child: Text('ElevatedButton'),
+          onPressed: () => print('got ElevatedButton press'),
+        ),
+        message: 'I am a tooltip!',
+        preferBelow: false,
       );
 
   FloatingActionButton _buildFloatingActionButton() {
@@ -200,6 +248,7 @@ class _HomeState extends State<Home> {
   IconButton _buildIconButton() => IconButton(
         icon: Icon(Icons.save, color: Colors.green),
         onPressed: () => print('got IconButton press'),
+        tooltip: 'This is a tooltip.',
       );
 
   OutlinedButton _buildOutlinedButton() => OutlinedButton(
@@ -319,6 +368,12 @@ class _HomeState extends State<Home> {
     );
   }
 
+  Widget _buildText() => Tooltip(
+        child: Text('I have a tooltip.'),
+        message: 'Now you see the tooltip.',
+        triggerMode: TooltipTriggerMode.tap,
+      );
+
   Widget _buildTextField() {
     return MyTextField(
       hintText: 'Enter your first name.',
@@ -407,6 +462,10 @@ class _HomeState extends State<Home> {
           child: ListView(
             //controller: scrollController,
             children: <Widget>[
+              _buildCupertinoDatePicker(),
+              _buildCupertinoPicker(),
+              _buildDivider(),
+
               ExpandIcon(
                   isExpanded: isExpanded,
                   onPressed: (_) {
@@ -462,7 +521,7 @@ class _HomeState extends State<Home> {
               // This creates a Text widget and
               // an ElevatedButton that uses it.
               MyButton(
-                text: 'Press Me',
+                text: 'MyButton',
                 onPressed: () => print('got MyButton Press'),
               ).row, // width will match parent without this
               _buildDivider(),
@@ -490,6 +549,9 @@ class _HomeState extends State<Home> {
               _buildDivider(),
 
               _buildSwitch(),
+              _buildDivider(),
+
+              _buildText(),
               _buildDivider(),
 
               _buildTextField(),
