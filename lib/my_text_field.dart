@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widget_extensions.dart';
 
-typedef ValidatorFn = String? Function(String?)?;
+typedef ValidatorFn = String? Function(String?);
 
 class MyTextField extends StatefulWidget {
   final String hintText;
@@ -9,7 +9,7 @@ class MyTextField extends StatefulWidget {
   final String labelText;
   final bool obscureText;
   final void Function(String) onChanged;
-  final ValidatorFn validator;
+  final ValidatorFn? validator;
 
   const MyTextField({
     Key? key,
