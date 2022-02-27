@@ -1,10 +1,10 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'checkboxes.dart';
 import 'dismiss_keyboard.dart';
-import 'iterable_extension.dart';
 import 'my_autocomplete.dart';
 import 'my_button.dart';
 import 'my_checkbox.dart';
@@ -425,7 +425,7 @@ class _HomeState extends State<Home> {
 
   Iterable<String> getSelectedSportNames() {
     return Sport.values
-        .whereIndexed((sport, index) => selectedSports[index])
+        .whereIndexed((index, sport) => selectedSports[index])
         .map(describeEnum);
   }
 
